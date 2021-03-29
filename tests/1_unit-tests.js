@@ -58,9 +58,24 @@ describe('Unit Tests', () => {
     
   })
   describe('#conversions', () => {
-    const convert = convertHandler.convert()
+    const convert = (entry, unit) => convertHandler.convert(entry, unit)
     it('should correctly convert gal to L', () => {
-      expect(convert(1, 'gal')).to.be.equal([3.78541, 'L'])
+      assert.sameMembers(convert('1', 'gal'),['3.78541', 'L'], 'both members should be equal')
+    })
+    it('convertHandler should correctly convert L to gal', () => {
+      expect(convert(1.59, 'L')).members(['0.42003', 'gal'])
+    })
+    it('should correctly convert mi to km', () => {
+      expect(convert(4, 'mi')).members(['6.43736', 'km'])
+    })
+    it('should correctly convert km to mi', () => {
+      expect(convert(0.5, 'km')).members(['0.31069', 'mi'])
+    })
+    it('should correctly convert lbs to kg', () => {
+      expect(convert(3.5, 'lbs')).members(['1.58757', 'kg'])
+    })
+    it('should correctly convert kg to lbs', () => {
+      expect(convert(4/15, 'kg')).members(['0.58790', 'lbs'])
     })
 
   })

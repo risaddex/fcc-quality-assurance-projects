@@ -4,7 +4,7 @@
 	"description": "Metric / Imperial Unit Converter",
 	"main": "server.js",
 	"scripts": {
-    "dev": "nodemon server.js",
+    "dev": "nodemon --inspect server.js",
 		"start": "node server.js",
 		"test": "npx mocha ./tests/ --ui tdd",
     "test:dev": "nodemon --inspect --exec \"mocha ./tests/ --recursive --ui tdd \""
