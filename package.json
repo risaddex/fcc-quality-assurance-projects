@@ -7,7 +7,7 @@
     "dev": "nodemon server.js",
 		"start": "node server.js",
 		"test": "npx mocha ./tests/ --ui tdd",
-    "test:dev": "nodemon --exec \"mocha ./tests/ --recursive --ui tdd \""
+    "test:dev": "nodemon --inspect --exec \"mocha ./tests/ --recursive --ui tdd \""
 	},
 	"dependencies": {
 		"body-parser": "^1.19.0",
