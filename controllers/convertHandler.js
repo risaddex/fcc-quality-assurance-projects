@@ -1,9 +1,24 @@
 function ConvertHandler() {
   
   this.getNum = function(input) {
-    let result;
-    
-    return result;
+    let result
+    // handle invalid fractions
+    if ((/\d+\/\d+\/\d+/).test(input)) {
+      return "invalid number and unit"
+    }
+    // eval fractions
+    if (/\d+\/\d+/.test(input)) {
+      return eval(input)
+    }
+    // eval decimal fractions
+    if ((/\d+\.\d+\/\d+/).test(input)) {
+      return eval(input)
+    }
+    // match standalone units and give them value 1
+    if ((/^(gal|km|lbs|kg|mi|l)$/i.test(input))) {
+      return `1${input}`
+    }
+    return input
   };
   
   this.getUnit = function(input) {
