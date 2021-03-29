@@ -7,7 +7,6 @@ function ConvertHandler() {
   const unitRegex = /(gal|km|lbs|kg|mi|L)$/i;
 
   this.getNum = function (input) {
-    let result;
     // match standalone units and give them value 1
     if (/^(gal|km|lbs|kg|mi|L)$/i.test(input)) {
       return 1;
@@ -86,10 +85,30 @@ function ConvertHandler() {
   };
 
   this.getString = function (initNum, initUnit, returnNum, returnUnit) {
-    let result;
 
-    return result;
+    return `${initNum} ${initUnit} converts to ${returnNum} ${returnUnit}`
   };
+
+  this.getResponse = function (reqInput) {
+    // const match = reqInput.match(/\D/i)
+    // const index = match['index']
+
+    const num = this.getNum(reqInput)
+    const unit = this.getUnit(reqInput)
+    const returnUnit = this.getReturnUnit(unit)
+    const [convertedNum, convertedUnit] = this.convert(num, unit)
+    const spell = this.spellOutUnit
+    const string = this.getString(num, spell(unit), convertedNum, spell(convertedUnit))
+
+    return {
+      initNum: num,
+      initUnit: unit,
+      returnNum: Number(convertedNum),
+      returnUnit,
+      string
+    }
+
+  }
 }
 
 module.exports = ConvertHandler;
