@@ -5,7 +5,7 @@ const server = require('../server')
 
 chai.use(chaiHttp)
 
-suite('Functional Tests',  function() {
+suite('Functional Tests', async function() {
 
   test('should convert a valid input such as 10L: GET request to /api/convert', async function() {
     await chai
@@ -24,6 +24,7 @@ suite('Functional Tests',  function() {
       .catch((err) => {
         throw err
       })
+      console.log(this)
   })
 
   test('should not convert an invalid input such as 32g: GET request to /api/convert', async function() {

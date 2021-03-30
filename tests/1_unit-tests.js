@@ -6,7 +6,8 @@ const ConvertHandler = require('../controllers/convertHandler.js')
 let convertHandler = new ConvertHandler()
 
 suite('Unit Tests', function () {
-  suite('#inputs', function () {
+
+
     test('should correctly read a whole number input', () => {
       const whole = convertHandler.getNum('123l')
       assert.equal(whole, 123)
@@ -66,9 +67,8 @@ suite('Unit Tests', function () {
         spelledOut
       )
     })
-  })
 
-  suite('#conversions', function () {
+
     const convert = (entry, unit) => convertHandler.convert(entry, unit)
     test('should correctly convert gal to L', () => {
       assert.sameMembers(
@@ -92,5 +92,4 @@ suite('Unit Tests', function () {
     test('should correctly convert kg to lbs', () => {
       assert.sameMembers(convert(4 / 15, 'kg'), ['0.58790', 'lbs'])
     })
-  })
 })
