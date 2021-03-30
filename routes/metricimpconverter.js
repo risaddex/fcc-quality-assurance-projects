@@ -4,11 +4,11 @@ const router = require("express").Router();
 
 let convertHandler = new ConvertHandler();
 
-router.get("/convert", (req, res, next) => {
+router.get("/convert", (req, res) => {
   const response = convertHandler.getResponse(req.query.input);
 
   res.status(200).send(response);
-  next();
+
 });
 
 module.exports = router
