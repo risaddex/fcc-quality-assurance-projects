@@ -4,10 +4,10 @@
 	"description": "Metric / Imperial Unit Converter",
 	"main": "server.js",
 	"scripts": {
-    "dev": "nodemon --inspect server.js",
+		"dev": "nodemon --inspect server.js",
 		"start": "node server.js",
-		"test": "npx mocha ./tests/ --ui tdd",
-    "test:dev": "nodemon --inspect --exec \"mocha ./tests/ --recursive --ui tdd \""
+		"test": "mocha ./tests/ --ui tdd",
+		"test:dev": "nodemon --exec \"mocha ./tests/ --ui tdd\""
 	},
 	"dependencies": {
 		"body-parser": "^1.19.0",
@@ -18,9 +18,6 @@
 		"express": "^4.17.1",
 		"mocha": "^8.1.3"
 	},
-  "devDependencies": {
-    "nodemon": "latest"
-  },
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/freeCodeCamp/boilerplate-project-metricimpconverter"
@@ -30,5 +27,8 @@
 		"freeCodeCamp",
 		"express"
 	],
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"nodemon": "^2.0.7"
+	}
 }

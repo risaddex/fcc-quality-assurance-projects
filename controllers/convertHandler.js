@@ -1,19 +1,22 @@
 function ConvertHandler() {
   // gets foo.bar/baz
-  const regex1 = /^(\d+)?(\.\d+)?(\/\d+)?(gal|km|lbs|kg|mi|L)$/i;
+  const regex1 = /^(\d+)?(\.\d+)?(\/\d+)?[a-z]+$/i;
   // gets foo/baz.bar
-  const regex2 = /^(\d+)?(\/\d+)?(\.\d+)?(gal|km|lbs|kg|mi|L)$/i;
+  const regex2 = /^(\d+)?(\/\d+)?(\.\d+)?[a-z]+$/i;
   // gets valid units
   const unitRegex = /(gal|km|lbs|kg|mi|L)$/i;
 
   this.getNum = function (input) {
+
     // match standalone units and give them value 1
     if (/^(gal|km|lbs|kg|mi|L)$/i.test(input)) {
       return 1;
     }
+    // const match = reqInput.match(/\D+/i);
+    // const index = match["index"];
 
     if (regex1.test(input) || regex2.test(input)) {
-      return eval(input.replace(unitRegex, ""));
+      return eval(input.replace(/[a-z]+/ig, ""));
     }
     return "invalid number";
   };
@@ -42,73 +45,90 @@ function ConvertHandler() {
     return entryMap.get(entry);
   };
   this.spellOutUnit = function (unit) {
-    const abbreviated = ['gal', 'km', 'lbs', 'kg', 'mi', 'L']
-    const spelledOut = ['gallons', 'kilometers', 'pounds', 'kilograms', 'miles', 'liters']
+    const abbreviated = ["gal", "km", "lbs", "kg", "mi", "L"];
+    const spelledOut = [
+      "gallons",
+      "kilometers",
+      "pounds",
+      "kilograms",
+      "miles",
+      "liters",
+    ];
 
-
-    return spelledOut[abbreviated.indexOf(unit)]
+    return spelledOut[abbreviated.indexOf(unit)];
   };
 
   this.convert = function (initNum, initUnit) {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
-    
-    let result
+
+    let result;
     switch (initUnit) {
-      case 'gal':
-        result = [initNum * galToL, 'L']
-        break
-      case 'L':
-        result = [initNum / galToL, 'gal']
-        break
-      case 'lbs':
-        result = [initNum * lbsToKg, 'kg']
-        break
-      case 'kg':
-        result = [initNum / lbsToKg, 'lbs']
-        break
-      case 'mi':
-        result = [initNum * miToKm, 'km']
-        break
-      case 'km':
-        result = [initNum / miToKm, 'mi']
-        break
+      case "gal":
+        result = [initNum * galToL, "L"];
+        break;
+      case "L":
+        result = [initNum / galToL, "gal"];
+        break;
+      case "lbs":
+        result = [initNum * lbsToKg, "kg"];
+        break;
+      case "kg":
+        result = [initNum / lbsToKg, "lbs"];
+        break;
+      case "mi":
+        result = [initNum * miToKm, "km"];
+        break;
+      case "km":
+        result = [initNum / miToKm, "mi"];
+        break;
       default:
-        throw new Error('invalid unit')
+        return "invalid unit";
     }
 
-    const [num, str] = result
+    const [num, str] = result;
 
-    return [num.toFixed(5), str]
-
+    return [num.toFixed(5), str];
   };
 
   this.getString = function (initNum, initUnit, returnNum, returnUnit) {
-
-    return `${initNum} ${initUnit} converts to ${returnNum} ${returnUnit}`
+    return `${initNum} ${initUnit} converts to ${returnNum} ${returnUnit}`;
   };
 
   this.getResponse = function (reqInput) {
-    // const match = reqInput.match(/\D/i)
-    // const index = match['index']
+    
+    const num = this.getNum(reqInput);
+    const unit = this.getUnit(reqInput);
 
-    const num = this.getNum(reqInput)
-    const unit = this.getUnit(reqInput)
-    const returnUnit = this.getReturnUnit(unit)
-    const [convertedNum, convertedUnit] = this.convert(num, unit)
-    const spell = this.spellOutUnit
-    const string = this.getString(num, spell(unit), convertedNum, spell(convertedUnit))
+    if (isNaN(num) || /invalid/i.test(unit)) {
+      if (/invalid/i.test(unit)) {
+        if (isNaN(num)) {
+          return 'invalid number and unit'
+        }
+        return 'invalid unit'
+      }
+      return 'invalid number'
+    }
+      
+    const returnUnit = this.getReturnUnit(unit);
+    const [convertedNum, convertedUnit] = this.convert(num, unit);
+    const spell = this.spellOutUnit;
+    const string = this.getString(
+      num,
+      spell(unit),
+      convertedNum,
+      spell(convertedUnit)
+    );
 
     return {
       initNum: num,
       initUnit: unit,
       returnNum: Number(convertedNum),
       returnUnit,
-      string
-    }
-
-  }
+      string,
+    };
+  };
 }
 
 module.exports = ConvertHandler;
