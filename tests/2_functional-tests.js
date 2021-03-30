@@ -2,13 +2,12 @@ const chaiHttp = require('chai-http')
 const chai = require('chai')
 let assert = chai.assert
 const server = require('../server')
-const { it, describe } = require('mocha')
 
 chai.use(chaiHttp)
 
-suite('Functional Tests', async () => {
-  
-  it('should convert a valid input such as 10L: GET request to /api/convert', async () => {
+suite('Functional Tests',  function() {
+
+  test('should convert a valid input such as 10L: GET request to /api/convert', async function() {
     await chai
       .request(server)
       .get('/api/convert')
@@ -27,7 +26,7 @@ suite('Functional Tests', async () => {
       })
   })
 
-  it('should not convert an invalid input such as 32g: GET request to /api/convert', async () => {
+  test('should not convert an invalid input such as 32g: GET request to /api/convert', async function() {
     await chai
       .request(server)
       .get('/api/convert')
@@ -40,7 +39,7 @@ suite('Functional Tests', async () => {
       })
   })
 
-  it('should not convert an invalid number such as 3/7.2/4kg: GET request to /api/convert', async () => {
+  test('should not convert an invalid number such as 3/7.2/4kg: GET request to /api/convert', async function() {
     await chai
       .request(server)
       .get('/api/convert')
@@ -50,7 +49,7 @@ suite('Functional Tests', async () => {
       })
   })
 
-  it('should not convert an invalid number AND unit such as 3/7.2/4kilomegagram: GET request to /api/convert', async () => {
+  test('should not convert an invalid number AND unit such as 3/7.2/4kilomegagram: GET request to /api/convert', async function() {
     await chai
       .request(server)
       .get('/api/convert')
@@ -65,7 +64,7 @@ suite('Functional Tests', async () => {
       })
   })
 
-  it('should convert with no number such as kg: GET request to /api/convert', async () => {
+  test('should convert with no number such as kg: GET request to /api/convert', async function() {
     await chai
       .request(server)
       .get('/api/convert')
