@@ -6,7 +6,8 @@ const { it, describe } = require('mocha')
 
 chai.use(chaiHttp)
 
-describe('Functional Tests', async () => {
+suite('Functional Tests', async () => {
+  
   it('should convert a valid input such as 10L: GET request to /api/convert', async () => {
     await chai
       .request(server)
